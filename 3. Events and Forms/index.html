@@ -7,19 +7,19 @@
     <title>Document</title>
 
     <style>
-        .grandparent{
+        .grandparent {
             width: 300px;
             height: 300px;
             background-color: red;
         }
 
-        .parent{
+        .parent {
             width: 200px;
             height: 200px;
             background-color: blue;
         }
 
-        .child{
+        .child {
             width: 100px;
             height: 100px;
             background-color: green;
@@ -27,59 +27,61 @@
     </style>
 </head>
 
-<!-- Todo 3.2a Create a button with the text "Call inline event handler". Add an inline event handler that logs "From inline event hanlder" when the button is clicked -->
-<!-- Relevant Link: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#inline_event_handlers_%E2%80%94_dont_use_these See other event listener mechanisms section -->
-function callInlineEventHandler() {
-            console.log("From inline event handler");
-        }
+<body>
+    <button onclick="callInlineEventHandler()">Call inline event handler</button>
+    <button id="addEventListenerBtn">Call addEventListener</button>
 
-<!-- Todo 3.3a Create a button with the text "Call addEventListener" -->
-<button>Call addEventListener</button>
+    <form id="userForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName">
 
-<!-- Todo 3.4a Create a form that accepts the first name and last name of the user -->
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName">
 
-<div>
-    <h4>Todo 3.5</h4>
-    <div class="grandparent">
-        <div class="parent">
-            <div class="child">
-    
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <div id="resultsContainer"></div>
+
+    <div>
+        <h4>Todo 3.5</h4>
+        <div class="grandparent" onclick="logMessage('Grandparent')">
+            <div class="parent" onclick="logMessage('Parent')">
+                <div class="child" onclick="logMessage('Child')">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<body>
     <script>
         // Todo 3.1 When the page has loaded, log "The page has loaded"
-        // Relevant Link: https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event
-         window.onload = function () {
+        window.onload = function () {
             console.log("The page has loaded");
+        };
+
+        // Todo 3.2a Create a button with the text "Call inline event handler". Add an inline event handler that logs "From inline event handler" when the button is clicked
+        function callInlineEventHandler() {
+            console.log("From inline event handler");
+        }
 
         // Todo 3.3b Add an event handler for the button created in 2.3a. The event handler should log "From addEventListener" when the button is clicked
-        // Relevant Link: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#using_addeventlistener see Using addEventListener() section
         const addEventListenerBtn = document.getElementById('addEventListenerBtn');
         addEventListenerBtn.addEventListener('click', function () {
             console.log("From addEventListener");
         });
-        // Checkpoint 3.1 What is the difference between inline event handlers and addEventListener? When should you use one over the other?
-        // Answer: Inline event handlers are added directly on the HTML tags and is good for handling mulstiple functions and dynamic changes
-        // addEventListener is a method attaching listeners to elements it is mainly for larger projects and maintanable codebases
-        
 
-        const results = []
         // Todo 3.3b When the user presses the submit form button, append the contents of the form to results. Then, display the content of results
-        // Relevant Link: https://stackoverflow.com/questions/11563638/how-do-i-get-the-value-of-text-input-field-using-javascript
         function submitForm() {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
             const result = `${firstName} ${lastName}`;
-            results.push(result);
-            console.log("Results:", results);
+            
+            // Display the result in the resultsContainer
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.textContent = `Entered Name: ${result}`;
         }
-        // Todo 3.5 add event listenders for the grandparent, parent, and child divs. When clicked, the grandparent, parent, and child should log "Grandparent", "Parent", and "Child" respectively
-        // Relevant Link: https://youtu.be/XF1_MlZ5l6M?si=QrNjKXg-xXV6yghW @ 4:00 of the video
+
+        // Todo 3.5 add event listeners for the grandparent, parent, and child divs. When clicked, the grandparent, parent, and child should log "Grandparent", "Parent", and "Child" respectively
         const grandparent = document.querySelector(".grandparent");
         const parent = document.querySelector(".parent");
         const child = document.querySelector(".child");
@@ -88,9 +90,8 @@ function callInlineEventHandler() {
             logMessage('Grandparent');
         });
 
-         parent.addEventListener('click', function (event) {
-            // Uncomment the next line to stop event propagation and prevent the child from logging
-            // event.stopPropagation();
+        parent.addEventListener('click', function (event) {
+           
             logMessage('Parent');
         });
 
@@ -99,13 +100,14 @@ function callInlineEventHandler() {
         });
 
         // Checkpoint 3.2 What is event bubbling? How was it shown in Todo 3.5?
-        // Answer: It was used in 3.5 when the child element is clicked the event occurs going through child, parent, grandparent in that order
+       // Answer: It was used in 3.5 when the child element is clicked the event occurs going through child, parent, grandparent in that order
         // It goes in that order from the bottom to the top just like how a bobble rises upwards.
-        
+
         // Bonus Todo 3.6 Change your code in the previous todo such that "grandparent" is displayed first
+        
 
         // Bonus Todo 3.7 Change your code in the previous todo such that "parent" is never displayed
-
+       
     </script>
 </body>
 
